@@ -56,6 +56,13 @@ class Item
             $statement = $this->db->prepare("DELETE FROM items WHERE sku = :id");
             $statement->bindParam(':id', $id);
             $statement->execute();
+
+            $rowsAffected = $statement->rowCount();
+        
+            if ($rowsAffected === 0) {
+                return false;
+            }
+
             return true;
         } catch (\PDOException $e) {
             return false;
