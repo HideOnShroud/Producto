@@ -4,23 +4,29 @@ namespace Producto\Controllers;
 
 use Producto\Controller;
 use Producto\Database\Create;
+use Producto\Database\Database;
 use Producto\Database\Delete;
 use Producto\Database\Read;
+use Producto\Models\Item;
+
 
 class HomeController extends Controller{
     public function index() {
-        $read = new Read();
-        $data = $read->readItems();
-       
+        $db = Database::getInstance()->getConnection();
+        
+        $read = new Item($db);
+        $data = $read->read();
+        
         $this->jsonResponse($data);
     }
-
-
+    
+    
     public function create() {
         $requestData = file_get_contents('php://input');
         $decodedData = json_decode($requestData, true);
-        $create = new Create();
-        $result = $create->createItem($decodedData);
+        $db = Database::getInstance()->getConnection();
+        $create = new Item($db);
+        $result = $create->create($decodedData);
         if ($result) {
             $responseData = [
                 'message' => 'Resource created successfully!'
@@ -35,15 +41,16 @@ class HomeController extends Controller{
     
         
     }
-
-
+    
+    
     public function delete() {
-
-        $delete = new Delete();
+        
+        $db = Database::getInstance()->getConnection();
+        $delete = new Item($db);
         $requestData = file_get_contents('php://input');
         $decodedData = json_decode($requestData, true);
         $id = $decodedData['sku'];
-        $result = $delete->deleteItem($id);
+        $result = $delete->delete($id);
 
         if ($result) {
             $responseData = [
