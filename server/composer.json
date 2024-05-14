@@ -1,9 +1,0 @@
-{
-    "name": "producto/server",
-    "autoload": {
-        "psr-4": {
-            "Producto\\": "src/"
-        }
-    },
-    "require": {}
-}
