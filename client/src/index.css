@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body{
   -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */}
+  scrollbar-width: none;  /* Firefox */
+font-family: 'Abel', sans-serif;}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 html::-webkit-scrollbar {

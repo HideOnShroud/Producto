@@ -3,9 +3,9 @@ export interface ItemInterface {
     name: string,
     price: number,
     productType: string,
-    size: number,
-    weight: number,
-    height: number,
-    width: number,
-    length: number
+    size: number | null,
+    weight: number | null,
+    height: number | null,
+    width: number | null,
+    length: number | null
 }
