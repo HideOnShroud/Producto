@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import Item from "../components/Item";
+import { ChangeEvent, useState } from "react";
 import Navbar from "../components/Navbar";
 import useItem from "../store";
 import { ItemInterface } from "../entities/ItemInterface";

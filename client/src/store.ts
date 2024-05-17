@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { ItemInterface } from './entities/ItemInterface'
-import Item from './components/Item'
 
 interface ItemStore {
     item: ItemInterface[]
