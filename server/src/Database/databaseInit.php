@@ -10,13 +10,13 @@ try {
     $sql = "CREATE TABLE IF NOT EXISTS items (
         sku VARCHAR(50) PRIMARY KEY,
         name VARCHAR(255),
-        price DECIMAL(10,5),
+        price DECIMAL(10,2),
         productType VARCHAR(100),
-        size DECIMAL(10,5),
-        weight DECIMAL(10,5),
-        height DECIMAL(10,5),
-        width DECIMAL(10,5),
-        length DECIMAL(10,5),
+        size DECIMAL(10,2),
+        weight DECIMAL(10,2),
+        height DECIMAL(10,2),
+        width DECIMAL(10,2),
+        length DECIMAL(10,2),
         UNIQUE(sku)
     )";
 

@@ -3,10 +3,7 @@
 namespace Producto\Controllers;
 
 use Producto\Controller;
-use Producto\Database\Create;
 use Producto\Database\Database;
-use Producto\Database\Delete;
-use Producto\Database\Read;
 use Producto\Models\Item;
 
 
