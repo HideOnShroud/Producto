@@ -35,7 +35,7 @@ const HomePage = () => {
                 <Navbar title="Product List" button1Action="/addproduct" button1="Add" button2="Mass Delete" button2Action={deleteSelected} />
             </div>
             <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
-                {items.map((item) => <div className={select.includes(item.sku) ? "opacity-50 relative" : "relative"} onClick={() => handleClick(item.sku)}>
+                {items.map((item) => <div key={item.sku} className={select.includes(item.sku) ? "opacity-50 relative" : "relative"} onClick={() => handleClick(item.sku)}>
                     <input type="checkbox" checked={select.includes(item.sku)} className="delete-checkbox absolute z-10 top-4 left-5 size-5" />
                     <Item item={item} />
                 </div>

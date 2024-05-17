@@ -4,7 +4,7 @@ import Item from './components/Item'
 
 interface ItemStore {
     item: ItemInterface[]
-
+    check: boolean
     addItem: (item: ItemInterface) => Promise<void>
     getItem: () => Promise<void>
     deleteItem: (sku: string) => void
@@ -12,6 +12,7 @@ interface ItemStore {
 
 const useItem = create<ItemStore>((set) => ({
     item: [],
+    check: false,
     addItem: async (item: ItemInterface) => {
         try {
             const response = await fetch('http://localhost:9999/api/addproduct', {
@@ -24,6 +25,7 @@ const useItem = create<ItemStore>((set) => ({
             if (!response.ok) {
                 throw new Error('Failed to add Product')
             }
+            set({ check: true })
             console.log("done")
         } catch (error) {
             console.error(error)
