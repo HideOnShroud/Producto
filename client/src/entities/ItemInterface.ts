@@ -1,7 +1,7 @@
 export interface ItemInterface {
     sku: string,
     name: string,
-    price: number,
+    price: number | null,
     productType: string,
     size: number | null,
     weight: number | null,
