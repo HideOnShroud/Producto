@@ -9,7 +9,7 @@ const HomePage = () => {
     useEffect(() => {
         getItems()
     }, [getItems])
-
+    const [test, setTest] = useState(true)
     const [select, setSelect] = useState<string[]>([])
 
     const handleClick = (sku: string) => {
@@ -26,13 +26,14 @@ const HomePage = () => {
     const deleteSelected = () => {
         select.map((item) => deleter(item))
         setSelect([])
+        setTest(false)
     }
 
     return (
         <>
             <div className="">
 
-                <Navbar title="Product List" button1Action="/addproduct" button1="ADD" button2={select.length > 0 ? "MASS DELETE" : ""} button2Action={deleteSelected} />
+                <Navbar title="Product List" button1Action="/addproduct" button1="ADD" button2={test ? "MASS DELETE" : ""} button2Action={deleteSelected} />
             </div>
             <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
                 {items.map((item) => <div key={item.sku} className={select.includes(item.sku) ? "opacity-50 relative" : "relative"} onClick={() => handleClick(item.sku)}>
