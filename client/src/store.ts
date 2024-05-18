@@ -19,6 +19,7 @@ const useItem = create<ItemStore>((set) => ({
                 body: JSON.stringify(item),
                 headers: {
                     // 'Content-Type': 'application/json',
+
                 }
             })
             if (!response.ok) {
