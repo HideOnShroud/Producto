@@ -14,7 +14,7 @@ const useItem = create<ItemStore>((set) => ({
     check: false,
     addItem: async (item: ItemInterface) => {
         try {
-            const response = await fetch('http://producto-app.000webhostapp.com/api/addproduct', {
+            const response = await fetch('https://producto-app.000webhostapp.com/api/addproduct', {
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
@@ -54,7 +54,7 @@ const useItem = create<ItemStore>((set) => ({
     deleteItem: async (sku: string) => {
         try {
             const deleteItem = JSON.parse(`{"${"sku"}":"${sku}"}`)
-            const response = await fetch('http://producto-app.000webhostapp.com/api/', {
+            const response = await fetch('https://producto-app.000webhostapp.com/api/', {
                 method: 'DELETE',
                 headers: {
                     // 'Content-Type': 'application/json',
