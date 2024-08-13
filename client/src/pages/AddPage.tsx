@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import Item from "../components/Item";
+import { ChangeEvent, useState } from "react";
 import Navbar from "../components/Navbar";
 import useItem from "../store";
 import { ItemInterface } from "../entities/ItemInterface";
@@ -193,7 +192,7 @@ const AddPage = () => {
         <>
             <Navbar title="Product Add" button1Action="/" button1="Cancel" button2="Save" button2Action={addProduct} />
             <div className="bg-neutral-50 gap-5 pl-10 pt-20 flex justify-center pr-10 w-full h-[100vh]">
-                <form action="" id="product-form" className="flex shadow-md w-5/6 lg:w-1/2 justify-center bg-neutral-100 rounded-xl h-max pb-5 mt-10" method="post">
+                <form action="" id="product_form" className="flex shadow-md w-5/6 lg:w-1/2 justify-center bg-neutral-100 rounded-xl h-max pb-5 mt-10" method="post">
                     <div className="flex flex-col gap-3 w-2/3 pt-5 pb-5">
 
                         <label htmlFor="sku" >SKU:</label>
