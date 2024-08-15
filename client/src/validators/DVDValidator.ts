@@ -1,13 +1,10 @@
-import { ProductValidator, ProductAttributes } from "./ProductValidator";
-import { ValidationResult } from "../entities/ValidationResult"
+import { ProductValidator, ProductAttributes } from "./ProductValidator"
 
 
 export class DVDValidator extends ProductValidator {
-    validate(attributes: ProductAttributes): ValidationResult {
-        const size = attributes.size_mb || '';
-        const errors = [
-            ...(parseFloat(size) <= 0 || !this.isValidNumber(size) ? ["Size must be greater than 0."] : [])
-        ];
-        return { isValid: errors.length === 0, errors };
+    validate(attributes: ProductAttributes): boolean {
+        const sizeStr = attributes.size_mb || ''
+        const size = parseFloat(sizeStr)
+        return size >= 0
     }
 }

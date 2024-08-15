@@ -1,13 +1,11 @@
-import { ProductValidator, ProductAttributes } from "./ProductValidator";
-import { ValidationResult } from "../entities/ValidationResult"
+import { ProductValidator, ProductAttributes } from "./ProductValidator"
 
 export class BookValidator extends ProductValidator {
-    validate(attributes: ProductAttributes): ValidationResult {
-        const weight = attributes.weight_kg || '';
-        const errors = [
-            ...(parseFloat(weight) <= 0 || !this.isValidNumber(weight) ? ["Weight must be greater than 0."] : [])
-        ];
-        return { isValid: errors.length === 0, errors };
+    validate(attributes: ProductAttributes): boolean {
+        // Check if weight_kg is a valid number
+        const weightStr = attributes.weight_kg || ''
+        const weight = parseFloat(weightStr)
+        // Check if price is a valid number and greater than 0
+        return weight >= 0
     }
-
 }

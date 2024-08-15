@@ -1,18 +1,19 @@
-import { ProductValidator, ProductAttributes } from "./ProductValidator";
-import { ValidationResult } from "../entities/ValidationResult"
+import { ProductValidator, ProductAttributes } from "./ProductValidator"
 
 export class FurnitureValidator extends ProductValidator {
-    validate(attributes: ProductAttributes): ValidationResult {
-        const height = attributes.height_cm || '';
-        const width = attributes.width_cm || '';
-        const length = attributes.length_cm || '';
+    validate(attributes: ProductAttributes): boolean {
+        // Check if all dimensions are valid numbers
+        const heightStr = attributes.height_cm || ''
+        const height = parseFloat(heightStr)
+        const widthStr = attributes.width_cm || ''
+        const width = parseFloat(widthStr)
+        const lengthStr = attributes.length_cm || ''
+        const length = parseFloat(lengthStr)
 
-        const errors = [
-            ...(parseFloat(height) <= 0 || !this.isValidNumber(height) ? ["Height must be greater than 0."] : []),
-            ...(parseFloat(width) <= 0 || !this.isValidNumber(width) ? ["Width must be greater than 0."] : []),
-            ...(parseFloat(length) <= 0 || !this.isValidNumber(length) ? ["Length must be greater than 0."] : [])
-        ];
-
-        return { isValid: errors.length === 0, errors };
+        return (
+            height >= 0 &&
+            width >= 0 &&
+            length >= 0
+        )
     }
 }

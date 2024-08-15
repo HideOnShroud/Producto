@@ -1,124 +1,126 @@
-import React, { ChangeEvent, useState } from 'react';
-import Navbar from '../components/Navbar';
-import useItem from '../store';
-import { ItemInterface } from '../entities/ItemInterface';
-import { ProductValidator } from '../validators/ProductValidator';
-import { BookValidator } from '../validators/BookValidator';
-import { DVDValidator } from '../validators/DVDValidator';
-import { FurnitureValidator } from '../validators/FurnitureValidator';
-import { SKUValidator } from '../validators/SKUValidator';
-import { NameValidator } from '../validators/NameValidator';
-import { PriceValidator } from '../validators/PriceValidator';
-import { ProductTypeValidator } from '../validators/ProductTypeValidator';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, useState } from 'react'
+import Navbar from '../components/Navbar'
+import useItem from '../store'
+import { ItemInterface } from '../entities/ItemInterface'
+import { ProductValidator } from '../validators/ProductValidator'
+import { BookValidator } from '../validators/BookValidator'
+import { DVDValidator } from '../validators/DVDValidator'
+import { FurnitureValidator } from '../validators/FurnitureValidator'
+import { SKUValidator } from '../validators/SKUValidator'
+import { NameValidator } from '../validators/NameValidator'
+import { PriceValidator } from '../validators/PriceValidator'
+import { ProductTypeValidator } from '../validators/ProductTypeValidator'
+import { useNavigate } from 'react-router-dom'
 
-const validators: { [key: string]: ProductValidator } = {
-    sku: new SKUValidator(),
-    name: new NameValidator(),
-    price: new PriceValidator(),
-    product_type: new ProductTypeValidator(),
-    Book: new BookValidator(),
-    DVD: new DVDValidator(),
-    Furniture: new FurnitureValidator()
-};
-
-const AddPage: React.FC = () => {
-    const addItems = useItem((state) => state.addItem);
+const AddPage = () => {
+    const addItems = useItem((state) => state.addItem)
     const [item, setItem] = useState<ItemInterface>({
         sku: "",
         name: "",
         price: "",
         product_type: "",
         attributes: {}
-    });
+    })
 
-    const [notifications, setNotifications] = useState<{ [key: string]: string }>({});
-    const [select, setSelect] = useState("");
-    const navigate = useNavigate();
+    const [notification, setNotification] = useState<string[]>([])
+    const [fields, setFields] = useState<{ [key: string]: boolean }>({})
+    const [select, setSelect] = useState("")
+    const navigate = useNavigate()
 
-    const validateField = (key: string, value: string) => {
-        const validator = validators[key];
-        if (validator) {
-            const result = validator.validate({ [key]: value });
-            if (!result.isValid) {
-                setNotifications(prev => ({ ...prev, [key]: (result.errors || []).join(', ') }));
-            } else {
-                setNotifications(prev => ({ ...prev, [key]: '' }));
-            }
+    const validateFields = (): boolean => {
+        let isValid = true
+        const validatorsMap: { [key: string]: ProductValidator } = {
+            sku: new SKUValidator(),
+            name: new NameValidator(),
+            price: new PriceValidator(),
+            product_type: new ProductTypeValidator(),
+            Book: new BookValidator(),
+            DVD: new DVDValidator(),
+            Furniture: new FurnitureValidator()
         }
-    };
 
-    const validateAttributes = (attributes: { [key: string]: string }) => {
-        const attributeValidator = validators[select];
+        const validatorsToCheck = [
+            { key: 'sku', value: item.sku },
+            { key: 'name', value: item.name },
+            { key: 'price', value: item.price },
+            { key: 'product_type', value: item.product_type }
+        ]
+
+        validatorsToCheck.forEach(({ key, value }) => {
+            const validator = validatorsMap[key]
+            if (validator) {
+                const result = validator.validate({ [key]: value })
+                setFields((prev) => ({
+                    ...prev,
+                    [key]: result
+                }))
+                if (!result) isValid = false
+            }
+        })
+
+        const attributeValidator = validatorsMap[select]
         if (attributeValidator) {
-            const result = attributeValidator.validate(attributes);
-            if (!result.isValid) {
-                setNotifications(prev => ({ ...prev, attributes: (result.errors || []).join(', ') }));
-            } else {
-                setNotifications(prev => ({ ...prev, attributes: '' }));
-            }
+            const result = attributeValidator.validate(item.attributes)
+            setFields((prev) => ({
+                ...prev,
+                [select]: result
+            }))
+            if (!result) isValid = false
         }
-    };
 
-    const validateAllFields = () => {
-        // Validate individual fields
-        ['sku', 'name', 'price', 'product_type'].forEach(key => {
-            const value = item[key as keyof ItemInterface] || ''; // Provide a default value if undefined
-            validateField(key, value.toString());
-        });
-
-        // Validate attributes based on selected product type
-        validateAttributes(item.attributes);
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-
-        setItem(prevItem => {
-            const newItem = {
-                ...prevItem,
-                [name]: value,
-                attributes: {
-                    ...prevItem.attributes,
-                    [name]: value
-                }
-            };
-
-            if (name === 'product_type') {
-                setSelect(value);
-            } else {
-                validateField(name, value);
-            }
-
-            return newItem;
-        });
-
-        if (name !== 'product_type') {
-            validateAttributes({
-                ...item.attributes,
-                [name]: value
-            });
-        }
-    };
+        return isValid
+    }
 
     const handleSubmit = async () => {
-        validateAllFields(); // Validate all fields before submission
-
-        if (Object.values(notifications).every(msg => msg === '')) { // Check if there are no errors
+        if (validateFields()) {
             try {
-                const success = await addItems(item);
+                const success = await addItems(item)
                 if (success) {
-                    navigate('/');
+                    console.log("Item added successfully. Navigating to home.")
+                    navigate('/')
                 } else {
-                    setNotifications(prev => ({ ...prev, general: "Item with the same SKU already exists." }));
+                    setNotification(["Item with the same SKU already exists."])
                 }
             } catch (error) {
-                setNotifications(prev => ({ ...prev, general: "Failed to add item. Please try again." }));
+                console.error("Failed to add item:", error)
+                setNotification(["Failed to add item. Please try again."])
             }
         } else {
-            console.log("Validation errors:", notifications);
+            console.log("Validation failed.")
         }
-    };
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target
+
+        setItem((prevItem) => {
+            const updatedAttributes = name !== 'product_type' ? {
+                ...prevItem.attributes,
+                [name]: value
+            } : prevItem.attributes
+
+            const updatedItem = {
+                ...prevItem,
+                [name]: value,
+                attributes: updatedAttributes
+            }
+
+            return updatedItem
+        })
+
+        // Perform validation
+        validateFields()
+
+        // Update fields state
+        setFields((prevFields) => ({
+            ...prevFields,
+            [name]: value.trim() !== ""
+        }))
+
+        if (name === 'product_type') {
+            setSelect(value)
+        }
+    }
 
     const renderAttributesFields = () => {
         switch (select) {
@@ -131,11 +133,11 @@ const AddPage: React.FC = () => {
                             name="weight_kg"
                             id="weight_kg"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight_kg'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
-                        {notifications['attributes'] && <p>{notifications['attributes']}</p>}
+                        <p>Please, provide weight!</p>
                     </>
-                );
+                )
             case 'DVD':
                 return (
                     <>
@@ -145,11 +147,11 @@ const AddPage: React.FC = () => {
                             name="size_mb"
                             id="size_mb"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['size_mb'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
-                        {notifications['attributes'] && <p>{notifications['attributes']}</p>}
+                        <p>Please, provide size</p>
                     </>
-                );
+                )
             case 'Furniture':
                 return (
                     <>
@@ -159,7 +161,7 @@ const AddPage: React.FC = () => {
                             name="height_cm"
                             id="height_cm"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['height_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
                         <label htmlFor="width_cm">Width (cm):</label>
                         <input
@@ -167,7 +169,7 @@ const AddPage: React.FC = () => {
                             name="width_cm"
                             id="width_cm"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['width_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
                         <label htmlFor="length_cm">Length (cm):</label>
                         <input
@@ -175,16 +177,16 @@ const AddPage: React.FC = () => {
                             name="length_cm"
                             id="length_cm"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['length_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
+                        <p>Please, provide dimensions!</p>
 
-                        {notifications['attributes'] && <p>{notifications['attributes']}</p>}
                     </>
-                );
+                )
             default:
-                return null;
+                return null
         }
-    };
+    }
 
     return (
         <>
@@ -196,31 +198,31 @@ const AddPage: React.FC = () => {
                         <input
                             type="text"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['sku'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                             name="sku"
                             id="sku"
                         />
-                        {notifications['sku'] && <p>{notifications['sku']}</p>}
+                        {fields['sku'] === false && <p>Please, provide SKU</p>}
 
                         <label htmlFor="name">Name:</label>
                         <input
                             type="text"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['name'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                             name="name"
                             id="name"
                         />
-                        {notifications['name'] && <p>{notifications['name']}</p>}
+                        {fields['name'] === false && <p>Please, provide name</p>}
 
                         <label htmlFor="price">Price ($):</label>
                         <input
                             type="number"
                             onChange={handleChange}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['price'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                             name="price"
                             id="price"
                         />
-                        {notifications['price'] && <p>{notifications['price']}</p>}
+                        {fields['price'] === false && <p>Please, provide price</p>}
 
                         <label htmlFor="product_type">Product Type:</label>
                         <select
@@ -228,25 +230,27 @@ const AddPage: React.FC = () => {
                             name="product_type"
                             value={select}
                             onChange={(e) => {
-                                handleChange(e);
-                                setSelect(e.target.value);
+                                handleChange(e)
+                                setSelect(e.target.value)
                             }}
-                            className="border-2 border-cyan-900 rounded-md shadow-md w-full self-center"
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['product_type'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         >
+
                             <option value=""></option>
                             <option value="Book">Book</option>
                             <option value="DVD">DVD</option>
                             <option value="Furniture">Furniture</option>
                         </select>
+                        {fields['product_type'] === false && <p>Please, chose product type</p>}
 
                         {renderAttributesFields()}
 
-                        {notifications['general'] && <p>{notifications['general']}</p>}
+                        {notification.length > 0 && notification.map((noti, index) => <p key={index}>{noti}</p>)}
                     </div>
                 </form>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default AddPage;
+export default AddPage

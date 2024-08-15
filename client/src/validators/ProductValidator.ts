@@ -1,19 +1,17 @@
-import { ValidationResult } from "../entities/ValidationResult";
+const regex = /^\d{1,10}(\.\d{0,2})?$/
 
 export interface ProductAttributes {
-    [key: string]: string;
+    [key: string]: string
 }
-
-const regex = /^\d{1,10}(\.\d{0,2})?$/;
 
 export abstract class ProductValidator {
     protected isValidNumber(value: string): boolean {
-        return regex.test(value);
+        return regex.test(value)
     }
 
     protected isNonEmptyString(value: string): boolean {
-        return value.trim() !== '';
+        return value.trim().length > 0
     }
 
-    abstract validate(attributes: ProductAttributes): ValidationResult;
+    abstract validate(attributes: ProductAttributes): boolean
 }

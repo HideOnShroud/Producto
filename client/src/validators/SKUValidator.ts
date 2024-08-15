@@ -1,13 +1,10 @@
-import { ProductValidator, ProductAttributes } from "./ProductValidator";
-import { ValidationResult } from "../entities/ValidationResult"
+// SKUValidator.ts
+import { ProductValidator, ProductAttributes } from "./ProductValidator"
 
 export class SKUValidator extends ProductValidator {
-    validate(attributes: ProductAttributes): ValidationResult {
-        const errors: string[] = [];
-        const sku = attributes.sku || '';
-
-        !this.isNonEmptyString(sku) && errors.push("SKU cannot be empty.");
-
-        return { isValid: errors.length === 0, errors };
+    validate(attributes: ProductAttributes): boolean {
+        const sku = attributes.sku || ''
+        // Check if SKU is not empty
+        return sku.trim().length > 0
     }
 }

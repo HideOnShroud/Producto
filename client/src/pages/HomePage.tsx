@@ -1,35 +1,34 @@
-import { useEffect, useState } from "react";
-import Item from "../components/Item";
-import Navbar from "../components/Navbar";
-import useItem from "../store";
+import { useEffect, useState } from "react"
+import Item from "../components/Item"
+import Navbar from "../components/Navbar"
+import useItem from "../store"
 
 const HomePage = () => {
     // Get items and actions from the store
-    const getItems = useItem((state) => state.getItem);
-    const items = useItem((state) => state.item);
-    const deleteItem = useItem((state) => state.deleteItem);
+    const getItems = useItem((state) => state.getItem)
+    const items = useItem((state) => state.item)
+    const deleteItem = useItem((state) => state.deleteItem)
 
     // State for selected items
-    const [select, setSelect] = useState<string[]>([]);
+    const [select, setSelect] = useState<string[]>([])
 
     // Fetch items on component mount
     useEffect(() => {
-        getItems();
-    }, [getItems]);
+        getItems()
+    }, [getItems])
 
     const handleClick = (sku: string) => {
         setSelect(prevSelect =>
             prevSelect.includes(sku)
                 ? prevSelect.filter(itemSku => itemSku !== sku)
                 : [...prevSelect, sku]
-        );
-    };
+        )
+    }
 
-    // Delete selected items
-    const deleteSelected = () => {
-        select.forEach(sku => deleteItem(sku));
-        setSelect([]);
-    };
+    const deleteSelected = async () => {
+        await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
+        setSelect([])
+    }
 
     return (
         <>
@@ -63,7 +62,7 @@ const HomePage = () => {
                 )}
             </div>
         </>
-    );
-};
+    )
+}
 
-export default HomePage;
+export default HomePage
