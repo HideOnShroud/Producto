@@ -62,7 +62,6 @@ const useItem = create<ItemStore>((set) => ({
             if (!response.ok) {
                 throw new Error('Failed to delete product')
             }
-            await useItem.getState().getItem() // Refresh the item list after deletion
         } catch (error) {
             console.error(error)
         }
