@@ -4,62 +4,50 @@ namespace Producto\Controllers;
 
 use Producto\Controller;
 use Producto\Database\Database;
-use Producto\Models\Item;
+use Producto\Models\ItemFactory;
+use Producto\Models\ItemRepository;
+use InvalidArgumentException;
 
+class HomeController extends Controller {
 
-class HomeController extends Controller{
-    public function index() {
+    private $itemRepository;
+
+    public function __construct() {
         $db = Database::getInstance()->getConnection();
-        
-        $read = new Item($db);
-        $data = $read->read();
-        
+        $this->itemRepository = new ItemRepository($db);
+    }
+
+    public function index() {
+        $data = $this->itemRepository->readAll();
         $this->jsonResponse($data);
     }
-    
-    
+
     public function create() {
         $requestData = file_get_contents('php://input');
         $decodedData = json_decode($requestData, true);
-        $db = Database::getInstance()->getConnection();
-        $create = new Item($db);
-        $result = $create->create($decodedData);
-        if ($result) {
-            $responseData = [
-                'message' => 'Resource created successfully!'
-            ];
-            $this->jsonResponse($responseData);
-        } else {
-            $responseData = [
-                'error' => 'Failed to create resource.'
-            ];
-            $this->jsonResponse($responseData, 500);
+
+        try {
+            $item = ItemFactory::createItem($decodedData);
+
+            if ($item && $this->itemRepository->save($item)) {
+                $this->jsonResponse(['message' => 'Resource created successfully!']);
+            } else {
+                $this->jsonResponse(['error' => 'Failed to create resource.'], 500);
+            }
+        } catch (InvalidArgumentException $e) {
+            $this->jsonResponse(['error' => $e->getMessage()], 400);
         }
-    
-        
     }
-    
-    
+
     public function delete() {
-        
-        $db = Database::getInstance()->getConnection();
-        $delete = new Item($db);
         $requestData = file_get_contents('php://input');
         $decodedData = json_decode($requestData, true);
-        $id = $decodedData['sku'];
-        $result = $delete->delete($id);
+        $sku = $decodedData['sku'];
 
-        if ($result) {
-            $responseData = [
-                'message' => 'Resource deleted successfully!'
-            ];
-            $this->jsonResponse($responseData);
+        if ($this->itemRepository->delete($sku)) {
+            $this->jsonResponse(['message' => 'Resource deleted successfully!']);
         } else {
-            $responseData = [
-                'error' => 'Failed to delete resource.'
-            ];
-            $this->jsonResponse($responseData, 500);
+            $this->jsonResponse(['error' => 'Failed to delete resource.'], 500);
         }
     }
 }
-
