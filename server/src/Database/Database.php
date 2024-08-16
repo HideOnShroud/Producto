@@ -10,9 +10,7 @@ class Database
     private static $instance;
     private $connection;
 
-
-    private function __construct(){
-        // database config
+    private function __construct() {
         $config = include __DIR__ . '/../config/database.php';
 
         $dsn = "mysql:host={$config['host']};dbname={$config['database']};port={$config['port']};charset={$config['charset']}";
@@ -25,18 +23,14 @@ class Database
         }
     }
 
-
-    // sngleton method
-    public static function getInstance(){
+    public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new self();
         }
-
         return self::$instance;
     }
 
-
-    public function getConnection(){
+    public function getConnection() {
         return $this->connection;
     }
 }

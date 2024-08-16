@@ -3,39 +3,41 @@ import { ItemInterface } from './entities/ItemInterface'
 
 interface ItemStore {
     item: ItemInterface[]
-    check: boolean
-    addItem: (item: ItemInterface) => Promise<void>
+    addItem: (item: ItemInterface) => Promise<boolean>
     getItem: () => Promise<void>
     deleteItem: (sku: string) => void
 }
 
 const useItem = create<ItemStore>((set) => ({
     item: [],
-    check: false,
     addItem: async (item: ItemInterface) => {
         try {
-            const response = await fetch('http://localhost:9999/api/addproduct', {
+            const response = await fetch('http://localhost:8000/api/addproduct', {
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
+
                 }
             })
             if (!response.ok) {
                 throw new Error('Failed to add Product')
             }
-            set({ check: true })
             console.log("done")
+            return true
         } catch (error) {
             console.error(error)
+            return false
         }
     },
     getItem: async () => {
         try {
-            const response = await fetch('http://localhost:9999/api/', {
+            const response = await fetch('http://localhost:8000/api/', {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
+
+
                 }
             })
             if (!response.ok) {
@@ -50,21 +52,21 @@ const useItem = create<ItemStore>((set) => ({
     },
     deleteItem: async (sku: string) => {
         try {
-            const deleteItem = JSON.parse(`{"${"sku"}":"${sku}"}`)
-            const response = await fetch('http://localhost:9999/api/', {
+            const response = await fetch('http://localhost:8000/api/', {
                 method: 'DELETE',
-                body: JSON.stringify(deleteItem),
                 headers: {
-                    'Content-Type': 'application/json',
-                }
+                    // 'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ sku }),
             })
-            if (response.ok) {
-                await useItem.getState().getItem()
+            if (!response.ok) {
+                throw new Error('Failed to delete product')
             }
         } catch (error) {
             console.error(error)
         }
     }
+
 }))
 
 export default useItem

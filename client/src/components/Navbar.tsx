@@ -26,7 +26,7 @@ const Navbar = ({ button1, button2, title, button1Action, button2Action }: props
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default Navbar;
+export default Navbar
