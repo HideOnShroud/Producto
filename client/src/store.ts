@@ -16,7 +16,7 @@ const useItem = create<ItemStore>((set) => ({
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
 
                 }
             })
@@ -55,7 +55,7 @@ const useItem = create<ItemStore>((set) => ({
             const response = await fetch('http://localhost:8000/api/', {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ sku }),
             })

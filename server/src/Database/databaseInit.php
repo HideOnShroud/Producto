@@ -1,8 +1,10 @@
 <?php
 
-require_once 'path/to/Database.php';
-require_once 'path/to/DatabaseInitializer.php';
+require_once 'Database.php';
+require_once 'DatabaseInitializer.php';
+use Producto\Database\Database;
+use Producto\Database\DatabaseInitializer;
 
-$db = Producto\Database\Database::getInstance()->getConnection();
-Producto\Database\DatabaseInitializer::initialize($db);
+$db = Database::getInstance()->getConnection();
+DatabaseInitializer::initialize($db);
 $db = null;

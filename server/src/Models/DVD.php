@@ -4,7 +4,7 @@ namespace Producto\Models;
 
 use PDO;
 
-class DVD extends Item {
+class Dvd extends Item {
     private $size;
 
     public function __construct(array $data) {
@@ -13,7 +13,7 @@ class DVD extends Item {
     }
 
     public function getProductType(): string {
-        return 'DVD';
+        return 'Dvd';
     }
 
     public function getSize(): float {
