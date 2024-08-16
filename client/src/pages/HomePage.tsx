@@ -3,19 +3,49 @@ import Item from "../components/Item"
 import Navbar from "../components/Navbar"
 import useItem from "../store"
 
-const HomePage = () => {
-    // Get items and actions from the store
-    const getItems = useItem((state) => state.getItem)
-    const items = useItem((state) => state.item)
-    const deleteItem = useItem((state) => state.deleteItem)
 
-    // State for selected items
+// Commented function is the correct one but 000webhost doesnt allow free Delete requests so i just hide the in the uncommented function
+// const HomePage = () => {
+//     // Get items and actions from the store
+//     const getItems = useItem((state) => state.getItem)
+//     const items = useItem((state) => state.item)
+//     const deleteItem = useItem((state) => state.deleteItem)
+
+//     // State for selected items
+//     const [select, setSelect] = useState<string[]>([])
+
+//     // Fetch items on component mount
+//     useEffect(() => {
+//         getItems()
+//     }, [getItems])
+
+//     const handleClick = (sku: string) => {
+//         setSelect(prevSelect =>
+//             prevSelect.includes(sku)
+//                 ? prevSelect.filter(itemSku => itemSku !== sku)
+//                 : [...prevSelect, sku]
+//         )
+//     }
+
+//     const deleteSelected = async () => {
+//         await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
+//         setSelect([])
+//     }
+
+const HomePage = () => {
+    const getItems = useItem((state) => state.getItem)
+    const itemsFromStore = useItem((state) => state.item)
+
+    const [items, setItems] = useState(itemsFromStore)
     const [select, setSelect] = useState<string[]>([])
 
-    // Fetch items on component mount
     useEffect(() => {
         getItems()
     }, [getItems])
+
+    useEffect(() => {
+        setItems(itemsFromStore)
+    }, [itemsFromStore])
 
     const handleClick = (sku: string) => {
         setSelect(prevSelect =>
@@ -25,8 +55,12 @@ const HomePage = () => {
         )
     }
 
-    const deleteSelected = async () => {
-        await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
+    // Updated deleteSelected function to "hide" items
+    const deleteSelected = () => {
+        // Update the local items state to exclude the selected items
+        setItems(prevItems => prevItems.filter(item => !select.includes(item.sku)))
+
+        // Clear the selection
         setSelect([])
     }
 

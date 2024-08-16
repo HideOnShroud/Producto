@@ -12,7 +12,7 @@ const useItem = create<ItemStore>((set) => ({
     item: [],
     addItem: async (item: ItemInterface) => {
         try {
-            const response = await fetch('http://localhost:8000/api/addproduct', {
+            const response = await fetch('https://producto-app.000webhostapp.com/api/addproduct', {
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
@@ -32,7 +32,7 @@ const useItem = create<ItemStore>((set) => ({
     },
     getItem: async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/', {
+            const response = await fetch('https://producto-app.000webhostapp.com/api/', {
                 method: 'GET',
                 headers: {
                     // 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const useItem = create<ItemStore>((set) => ({
     },
     deleteItem: async (sku: string) => {
         try {
-            const response = await fetch('http://localhost:8000/api/', {
+            const response = await fetch('https://producto-app.000webhostapp.com/api/', {
                 method: 'DELETE',
                 headers: {
                     // 'Content-Type': 'application/json',

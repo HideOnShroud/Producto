@@ -11,10 +11,10 @@ require '../vendor/autoload.php';
 // Producto\Database\DatabaseInitializer::initialize($db);
 // $db = null; // Close the connection
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Handle preflight request
-    exit;
-}
+// if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+//     // Handle preflight request
+//     exit;
+// }
 
 
 $router = require '../src/Routes/routes.php';
