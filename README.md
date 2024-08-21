@@ -20,21 +20,6 @@ Welcome to the Producto App! This web application allows users to manage a list 
 - **Avoid Conditional Statements**: Do not use if-else or switch-case statements to handle product type differences.
 - **Single Endpoint**: Use one general endpoint for saving products.
 
-## Special Notes
-
-### Handling DELETE Method Limitation
-
-Due to the limitations of the free plan on 000webhost.com, the DELETE method is unavailable. To pass the QA checks, a workaround has been implemented:
-
-- **Hiding Deleted Elements**: Instead of actually deleting products from the database, the frontend hides the deleted elements.
-
-For the complete implementation where the DELETE method for MASS DELETE works as intended, **please refer to the main branch of this repository**.
-
-### Product Type Differences Handling
-
-The Junior Developer Task required managing product type differences without using conditional statements or switches. While this can be achieved in PHP through method overloading, React does not support this feature. Therefore, product type checks are done in React using conditional logic.
-
-
 ## Features
 
 ### 1. Product List
