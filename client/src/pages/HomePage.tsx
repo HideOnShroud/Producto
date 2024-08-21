@@ -29,7 +29,7 @@ const HomePage = () => {
 
     const deleteSelected = async () => {
         await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
-        // setSelect([])
+        setSelect([])
     }
 
 
@@ -56,7 +56,7 @@ const HomePage = () => {
                             <input
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
-                                className="delete-checkbox absolute z-10 top-4 left-5 size-5"
+                                className="delete-checkbox"
                             />
                             <Item item={item} />
                         </div>
