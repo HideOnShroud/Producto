@@ -55,7 +55,7 @@ const useItem = create<ItemStore>((set) => ({
             const response = await fetch('https://producto.x10.mx/api/', {
                 method: 'DELETE',
                 headers: {
-                    // 'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ sku }),
             })
