@@ -66,6 +66,7 @@ const HomePage = () => {
 
     return (
         <>
+            <span>Product List</span>
             <div>
                 <Navbar
                     title="Product List"
@@ -76,7 +77,6 @@ const HomePage = () => {
                 />
             </div>
             <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
-                <h1>Product List</h1>
                 {(
                     items.map((item) => (
                         <div
