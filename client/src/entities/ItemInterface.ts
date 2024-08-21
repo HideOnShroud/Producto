@@ -3,7 +3,7 @@ export interface ItemInterface {
     sku: string
     name: string
     price: string
-    product_type: string
+    productType: string
     attributes: {
         weight_kg?: string
         size_mb?: string

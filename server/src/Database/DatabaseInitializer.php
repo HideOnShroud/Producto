@@ -18,7 +18,7 @@ class DatabaseInitializer
                 sku VARCHAR(50) PRIMARY KEY,
                 name VARCHAR(255),
                 price DECIMAL(10,2),
-                product_type VARCHAR(100)
+                productType VARCHAR(100)
             )");
 
             $db->exec("CREATE TABLE IF NOT EXISTS product_dvd (

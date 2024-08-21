@@ -5,10 +5,10 @@ interface Props {
 }
 
 const Item = ({ item }: Props) => {
-    const { sku, name, price, product_type, attributes } = item
+    const { sku, name, price, productType, attributes } = item
 
     const renderAttributes = () => {
-        switch (product_type) {
+        switch (productType) {
             case "Book":
                 return attributes!.weight_kg
                     ? `Weight: ${attributes!.weight_kg} Kg`
