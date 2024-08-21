@@ -66,7 +66,6 @@ const HomePage = () => {
 
     return (
         <>
-            <span>Product List</span>
             <div>
                 <Navbar
                     title="Product List"
