@@ -131,7 +131,7 @@ const AddPage = () => {
                         <input
                             type="number"
                             name="weight_kg"
-                            id="weight_kg"
+                            id="weight"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight_kg'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -145,7 +145,7 @@ const AddPage = () => {
                         <input
                             type="number"
                             name="size_mb"
-                            id="size_mb"
+                            id="size"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['size_mb'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -159,7 +159,7 @@ const AddPage = () => {
                         <input
                             type="number"
                             name="height_cm"
-                            id="height_cm"
+                            id="height"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['height_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -167,7 +167,7 @@ const AddPage = () => {
                         <input
                             type="number"
                             name="width_cm"
-                            id="width_cm"
+                            id="width"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['width_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -175,7 +175,7 @@ const AddPage = () => {
                         <input
                             type="number"
                             name="length_cm"
-                            id="length_cm"
+                            id="length"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['length_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
