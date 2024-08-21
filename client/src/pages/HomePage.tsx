@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar"
 import useItem from "../store"
 
 
+
 // Commented function is the correct one but 000webhost doesnt allow free Delete requests so i just hide the in the uncommented function
 // const HomePage = () => {
 //     // Get items and actions from the store
@@ -33,6 +34,8 @@ import useItem from "../store"
 //     }
 
 const HomePage = () => {
+
+
     const getItems = useItem((state) => state.getItem)
     const itemsFromStore = useItem((state) => state.item)
 
@@ -75,7 +78,7 @@ const HomePage = () => {
                     button2Action={deleteSelected}
                 />
             </div>
-            <div id="Product List" className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
+            <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
                 {(
                     items.map((item) => (
                         <div
