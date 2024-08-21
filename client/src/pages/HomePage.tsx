@@ -76,7 +76,7 @@ const HomePage = () => {
                     button2Action={deleteSelected}
                 />
             </div>
-            <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
+            <div id="Product List" className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
                 {(
                     items.map((item) => (
                         <div
