@@ -13,7 +13,7 @@ const Item = ({ item }: Props) => {
                 return attributes!.weight
                     ? `Weight: ${attributes!.weight} Kg`
                     : 'No weight specified'
-            case "DVD":
+            case "Dvd":
                 return attributes!.size
                     ? `Size: ${attributes!.size} Mb`
                     : 'No size specified'
