@@ -29,7 +29,7 @@ const HomePage = () => {
 
     const deleteSelected = async () => {
         await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
-        setSelect([])
+        // setSelect([])
     }
 
 
