@@ -18,7 +18,7 @@ const AddPage = () => {
         sku: "",
         name: "",
         price: "",
-        product_type: "",
+        productType: "",
         attributes: {}
     })
 
@@ -33,7 +33,7 @@ const AddPage = () => {
             sku: new SKUValidator(),
             name: new NameValidator(),
             price: new PriceValidator(),
-            product_type: new ProductTypeValidator(),
+            productType: new ProductTypeValidator(),
             Book: new BookValidator(),
             DVD: new DVDValidator(),
             Furniture: new FurnitureValidator()
@@ -43,7 +43,7 @@ const AddPage = () => {
             { key: 'sku', value: item.sku },
             { key: 'name', value: item.name },
             { key: 'price', value: item.price },
-            { key: 'product_type', value: item.product_type }
+            { key: 'productType', value: item.productType }
         ]
 
         validatorsToCheck.forEach(({ key, value }) => {
@@ -71,8 +71,11 @@ const AddPage = () => {
         return isValid
     }
 
+
+
     const handleSubmit = async () => {
         if (validateFields()) {
+            console.log(item)
             try {
                 const success = await addItems(item)
                 if (success) {
@@ -94,7 +97,7 @@ const AddPage = () => {
         const { name, value } = e.target
 
         setItem((prevItem) => {
-            const updatedAttributes = name !== 'product_type' ? {
+            const updatedAttributes = name !== 'productType' ? {
                 ...prevItem.attributes,
                 [name]: value
             } : prevItem.attributes
@@ -117,7 +120,7 @@ const AddPage = () => {
             [name]: value.trim() !== ""
         }))
 
-        if (name === 'product_type') {
+        if (name === 'productType') {
             setSelect(value)
         }
     }
@@ -127,11 +130,11 @@ const AddPage = () => {
             case 'Book':
                 return (
                     <>
-                        <label htmlFor="weight_kg">Weight (kg):</label>
+                        <label htmlFor="weight">Weight (kg):</label>
                         <input
                             type="number"
-                            name="weight_kg"
-                            id="weight_kg"
+                            name="weight"
+                            id="weight"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight_kg'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -141,11 +144,11 @@ const AddPage = () => {
             case 'DVD':
                 return (
                     <>
-                        <label htmlFor="size_mb">Size (MB):</label>
+                        <label htmlFor="size">Size (MB):</label>
                         <input
                             type="number"
-                            name="size_mb"
-                            id="size_mb"
+                            name="size"
+                            id="size"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['size_mb'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -155,27 +158,27 @@ const AddPage = () => {
             case 'Furniture':
                 return (
                     <>
-                        <label htmlFor="height_cm">Height (cm):</label>
+                        <label htmlFor="height">Height (cm):</label>
                         <input
                             type="number"
-                            name="height_cm"
-                            id="height_cm"
+                            name="height"
+                            id="height"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['height_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
-                        <label htmlFor="width_cm">Width (cm):</label>
+                        <label htmlFor="width">Width (cm):</label>
                         <input
                             type="number"
-                            name="width_cm"
-                            id="width_cm"
+                            name="width"
+                            id="width"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['width_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
-                        <label htmlFor="length_cm">Length (cm):</label>
+                        <label htmlFor="length">Length (cm):</label>
                         <input
                             type="number"
-                            name="length_cm"
-                            id="length_cm"
+                            name="length"
+                            id="length"
                             onChange={handleChange}
                             className={`border-2 rounded-md shadow-md w-full self-center ${fields['length_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         />
@@ -224,16 +227,16 @@ const AddPage = () => {
                         />
                         {fields['price'] === false && <p>Please, provide price</p>}
 
-                        <label htmlFor="product_type">Product Type:</label>
+                        <label htmlFor="productType">Product Type:</label>
                         <select
-                            id="product_type"
-                            name="product_type"
+                            id="productType"
+                            name="productType"
                             value={select}
                             onChange={(e) => {
                                 handleChange(e)
                                 setSelect(e.target.value)
                             }}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['product_type'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['productType'] === false ? 'border-red-500' : 'border-cyan-900'}`}
                         >
 
                             <option value=""></option>
@@ -241,7 +244,7 @@ const AddPage = () => {
                             <option value="DVD">DVD</option>
                             <option value="Furniture">Furniture</option>
                         </select>
-                        {fields['product_type'] === false && <p>Please, chose product type</p>}
+                        {fields['productType'] === false && <p>Please, chose product type</p>}
 
                         {renderAttributesFields()}
 

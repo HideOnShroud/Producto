@@ -16,14 +16,14 @@ class ItemRepository {
             $this->db->beginTransaction();
 
             $statement = $this->db->prepare(
-                "INSERT INTO products (sku, name, price, product_type) 
-                 VALUES (:sku, :name, :price, :product_type)"
+                "INSERT INTO products (sku, name, price, productType) 
+                 VALUES (:sku, :name, :price, :productType)"
             );
 
             $statement->bindValue(':sku', $item->getSku(), PDO::PARAM_STR);
             $statement->bindValue(':name', $item->getName(), PDO::PARAM_STR);
             $statement->bindValue(':price', $item->getPrice(), PDO::PARAM_STR);
-            $statement->bindValue(':product_type', $item->getProductType(), PDO::PARAM_STR);
+            $statement->bindValue(':productType', $item->getProductType(), PDO::PARAM_STR);
 
             $statement->execute();
 
@@ -79,7 +79,7 @@ class ItemRepository {
             }
 
             foreach ($products as &$product) {
-                $attributesHandler = ProductAttributesFactory::createAttributesHandler($product['product_type']);
+                $attributesHandler = ProductAttributesFactory::createAttributesHandler($product['productType']);
                 $product['attributes'] = $attributesHandler->loadAttributes($this->db, $product['sku']);
             }
 

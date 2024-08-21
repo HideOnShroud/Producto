@@ -3,6 +3,8 @@ import Item from "../components/Item"
 import Navbar from "../components/Navbar"
 import useItem from "../store"
 
+
+
 const HomePage = () => {
     // Get items and actions from the store
     const getItems = useItem((state) => state.getItem)
@@ -30,6 +32,8 @@ const HomePage = () => {
         setSelect([])
     }
 
+
+
     return (
         <>
             <div>
@@ -42,7 +46,7 @@ const HomePage = () => {
                 />
             </div>
             <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
-                {items.length ? (
+                {(
                     items.map((item) => (
                         <div
                             key={item.sku}
@@ -57,8 +61,6 @@ const HomePage = () => {
                             <Item item={item} />
                         </div>
                     ))
-                ) : (
-                    <p>No items available</p>
                 )}
             </div>
         </>

@@ -6,11 +6,11 @@ use InvalidArgumentException;
 
 class ItemFactory {
     public static function createItem(array $data): ?Item {
-        if (!isset($data['product_type'])) {
+        if (!isset($data['productType'])) {
             throw new InvalidArgumentException("Product type is missing");
         }
 
-        $className = __NAMESPACE__ . '\\' . ucfirst(strtolower($data['product_type']));
+        $className = __NAMESPACE__ . '\\' . ucfirst(strtolower($data['productType']));
 
         if (!class_exists($className)) {
             throw new InvalidArgumentException("Class $className does not exist");

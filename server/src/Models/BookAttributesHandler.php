@@ -6,9 +6,9 @@ use PDO;
 
 class BookAttributesHandler {
     public function saveAttributes(string $productId, Book $book, PDO $db): void {
-        $statement = $db->prepare("INSERT INTO product_book (product_id, weight_kg) VALUES (:product_id, :weight_kg)");
+        $statement = $db->prepare("INSERT INTO product_book (product_id, weight) VALUES (:product_id, :weight)");
         $statement->bindValue(':product_id', $productId, PDO::PARAM_STR);
-        $statement->bindValue(':weight_kg', $book->getWeight(), PDO::PARAM_STR);
+        $statement->bindValue(':weight', $book->getWeight(), PDO::PARAM_STR);
         $statement->execute();
     }
 
