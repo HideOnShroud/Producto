@@ -71,7 +71,7 @@ const AddPage = () => {
         return isValid
     }
 
-    const history = useNavigate()
+
 
     const handleSubmit = async () => {
         if (validateFields()) {
@@ -80,7 +80,7 @@ const AddPage = () => {
                 const success = await addItems(item)
                 if (success) {
                     console.log("Item added successfully. Navigating to home.")
-                    history('/')
+                    navigate('/')
                 } else {
                     setNotification(["Item with the same SKU already exists."])
                 }
