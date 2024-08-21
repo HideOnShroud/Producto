@@ -9,7 +9,7 @@ class Dvd extends Item {
 
     public function __construct(array $data) {
         parent::__construct($data);
-        $this->size = $data['size_mb'];
+        $this->size = $data['size'];
     }
 
     public function getProductType(): string {
@@ -21,9 +21,9 @@ class Dvd extends Item {
     }
 
     public function saveSpecificAttributes(string $productId, PDO $db): void {
-        $statement = $db->prepare("INSERT INTO product_dvd (product_id, size_mb) VALUES (:product_id, :size_mb)");
+        $statement = $db->prepare("INSERT INTO product_dvd (product_id, size) VALUES (:product_id, :size)");
         $statement->bindValue(':product_id', $productId, PDO::PARAM_STR);
-        $statement->bindValue(':size_mb', $this->size, PDO::PARAM_STR);
+        $statement->bindValue(':size', $this->size, PDO::PARAM_STR);
         $statement->execute();
     }
 }

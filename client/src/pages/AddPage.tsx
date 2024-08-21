@@ -73,6 +73,7 @@ const AddPage = () => {
 
     const handleSubmit = async () => {
         if (validateFields()) {
+            console.log(item)
             try {
                 const success = await addItems(item)
                 if (success) {

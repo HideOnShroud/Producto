@@ -23,21 +23,21 @@ class DatabaseInitializer
 
             $db->exec("CREATE TABLE IF NOT EXISTS product_dvd (
                 product_id VARCHAR(50) PRIMARY KEY,
-                size_mb DECIMAL(10,2),
+                size DECIMAL(10,2),
                 FOREIGN KEY (product_id) REFERENCES products(sku) ON DELETE CASCADE
             )");
 
             $db->exec("CREATE TABLE IF NOT EXISTS product_book (
                 product_id VARCHAR(50) PRIMARY KEY,
-                weight_kg DECIMAL(10,2),
+                weight DECIMAL(10,2),
                 FOREIGN KEY (product_id) REFERENCES products(sku) ON DELETE CASCADE
             )");
 
             $db->exec("CREATE TABLE IF NOT EXISTS product_furniture (
                 product_id VARCHAR(50) PRIMARY KEY,
-                height_cm DECIMAL(10,2),
-                width_cm DECIMAL(10,2),
-                length_cm DECIMAL(10,2),
+                height DECIMAL(10,2),
+                width DECIMAL(10,2),
+                length DECIMAL(10,2),
                 FOREIGN KEY (product_id) REFERENCES products(sku) ON DELETE CASCADE
             )");
 

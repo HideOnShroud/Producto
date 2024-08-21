@@ -10,17 +10,17 @@ const Item = ({ item }: Props) => {
     const renderAttributes = () => {
         switch (productType) {
             case "Book":
-                return attributes!.weight_kg
-                    ? `Weight: ${attributes!.weight_kg} Kg`
+                return attributes!.weight
+                    ? `Weight: ${attributes!.weight} Kg`
                     : 'No weight specified'
             case "DVD":
-                return attributes!.size_mb
-                    ? `Size: ${attributes!.size_mb} Mb`
+                return attributes!.size
+                    ? `Size: ${attributes!.size} Mb`
                     : 'No size specified'
             case "Furniture":
-                const { height_cm, width_cm, length_cm } = attributes!
-                return (height_cm && width_cm && length_cm)
-                    ? `Dimensions: ${width_cm} x ${height_cm} x ${length_cm}`
+                const { height, width, length } = attributes!
+                return (height && width && length)
+                    ? `Dimensions: ${width} x ${height} x ${length}`
                     : 'Incomplete dimensions'
             default:
                 return 'No attributes available'
