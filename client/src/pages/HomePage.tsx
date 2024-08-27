@@ -49,14 +49,14 @@ const HomePage = () => {
                 {(
                     items.map((item) => (
                         <div
-                            key={item.sku}
-                            className={select.includes(item.sku) ? "opacity-50 relative" : "relative"}
+                            id="delete-checkbox" key={item.sku}
+                            className={select.includes(item.sku) ? "opacity-50 relative delete-checkbox" : "relative delete-checkbox"}
                             onClick={() => handleClick(item.sku)}
                         >
                             <input
+                                id="delete-checkbox"
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
-                                onChange={() => handleClick(item.sku)}
                                 className="delete-checkbox absolute z-10 top-4 left-5 size-5"
                             />
                             <Item item={item} />
