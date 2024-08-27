@@ -56,6 +56,7 @@ const HomePage = () => {
                             <input
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
+                                onChange={() => handleClick(item.sku)}
                                 className="delete-checkbox absolute z-10 top-4 left-5 size-5"
                             />
                             <Item item={item} />
