@@ -28,7 +28,7 @@ const AddPage = () => {
     const navigate = useNavigate()
 
     const validateFields = (): boolean => {
-        let isValid = true;
+        let isValid = true
         const validatorsMap: { [key: string]: ProductValidator } = {
             sku: new SKUValidator(),
             name: new NameValidator(),
@@ -37,38 +37,38 @@ const AddPage = () => {
             Book: new BookValidator(),
             DVD: new DVDValidator(),
             Furniture: new FurnitureValidator()
-        };
+        }
 
         const validatorsToCheck = [
             { key: 'sku', value: item.sku },
             { key: 'name', value: item.name },
             { key: 'price', value: item.price },
             { key: 'productType', value: item.productType },
-        ];
+        ]
 
         validatorsToCheck.forEach(({ key, value }) => {
-            const validator = validatorsMap[key];
+            const validator = validatorsMap[key]
             if (validator) {
-                const result = validator.validate({ [key]: value });
+                const result = validator.validate({ [key]: value })
                 setFields((prev) => ({
                     ...prev,
                     [key]: result
-                }));
-                if (!result) isValid = false;
+                }))
+                if (!result) isValid = false
             }
-        });
+        })
 
-        const attributeValidator = validatorsMap[select];
+        const attributeValidator = validatorsMap[select]
         if (attributeValidator) {
-            const result = attributeValidator.validate(item.attributes);
+            const result = attributeValidator.validate(item.attributes)
             setFields((prev) => ({
                 ...prev,
                 [select]: result
-            }));
-            if (!result) isValid = false;
+            }))
+            if (!result) isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
 
