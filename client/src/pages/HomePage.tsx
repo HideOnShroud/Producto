@@ -28,9 +28,15 @@ const HomePage = () => {
     }
 
     const deleteSelected = async () => {
-        await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
-        setSelect([])
+        try {
+            await Promise.all(select.map(sku => deleteItem(sku)))
+            await getItems() // Fetch the updated list after deletion
+            setSelect([])
+        } catch (error) {
+            console.error('Error deleting items:', error)
+        }
     }
+
 
 
 
