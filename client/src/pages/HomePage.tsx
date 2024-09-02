@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Item from "../components/Item"
 import Navbar from "../components/Navbar"
 import useItem from "../store"
+import { ItemInterface } from "../entities/ItemInterface"
 
 
 
@@ -13,6 +14,7 @@ const HomePage = () => {
 
     // State for selected items
     const [select, setSelect] = useState<string[]>([])
+    const [products, setProducts] = useState<ItemInterface[]>([])
 
     const handleCheckboxChange = (sku: string) => {
         setSelect(prevSelect =>
@@ -26,6 +28,10 @@ const HomePage = () => {
     useEffect(() => {
         getItems()
     }, [getItems])
+    useEffect(() => {
+        setProducts(items)
+    }, [items])
+
 
     const handleClick = (sku: string) => {
         setSelect(prevSelect =>
@@ -38,6 +44,7 @@ const HomePage = () => {
     const deleteSelected = async () => {
         try {
             await Promise.all(select.map(sku => deleteItem(sku)))
+            setProducts(items.filter((item) => !select.includes(item.sku)))
             await getItems() // Refresh items
             setSelect([])
         } catch (error) {
