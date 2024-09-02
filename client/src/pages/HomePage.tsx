@@ -14,14 +14,6 @@ const HomePage = () => {
     // State for selected items
     const [select, setSelect] = useState<string[]>([])
 
-    const handleCheckboxChange = (sku: string) => {
-        setSelect(prevSelect =>
-            prevSelect.includes(sku)
-                ? prevSelect.filter(itemSku => itemSku !== sku)
-                : [...prevSelect, sku]
-        )
-    }
-
     // Fetch items on component mount
     useEffect(() => {
         getItems()
@@ -71,7 +63,7 @@ const HomePage = () => {
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
                                 className="delete-checkbox absolute z-10 top-4 left-5 size-5"
-                                onChange={() => handleCheckboxChange(item.sku)}
+                                onChange={() => handleClick(item.sku)}
                             />
                             <Item item={item} />
                         </div>
