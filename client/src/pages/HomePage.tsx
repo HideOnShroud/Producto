@@ -14,6 +14,14 @@ const HomePage = () => {
     // State for selected items
     const [select, setSelect] = useState<string[]>([])
 
+    const handleCheckboxChange = (sku: string) => {
+        setSelect(prevSelect =>
+            prevSelect.includes(sku)
+                ? prevSelect.filter(itemSku => itemSku !== sku)
+                : [...prevSelect, sku]
+        )
+    }
+
     // Fetch items on component mount
     useEffect(() => {
         getItems()
@@ -30,7 +38,7 @@ const HomePage = () => {
     const deleteSelected = async () => {
         try {
             await Promise.all(select.map(sku => deleteItem(sku)))
-            await getItems() // Fetch the updated list after deletion
+            getItems() // Refresh items
             setSelect([])
         } catch (error) {
             console.error('Error deleting items:', error)
@@ -63,6 +71,7 @@ const HomePage = () => {
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
                                 className="delete-checkbox absolute z-10 top-4 left-5 size-5"
+                                onChange={() => handleCheckboxChange(item.sku)}
                             />
                             <Item item={item} />
                         </div>
