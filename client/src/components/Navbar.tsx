@@ -14,7 +14,7 @@ const Navbar = ({ button1, button2, title, button1Action, button2Action }: props
     return (
         <>
             <div className="fixed flex w-full justify-between items-center border-b-cyan-950 border-2 z-50 h-16 bg-neutral-50">
-                <h1 className="content-start text-2xl md:pl-10 md:text-3xl lg:text-4xl text-cyan-950 pl-5 lg:pl-20">{title}</h1>
+                <h1 className="content-start text-2xl md:pl-10 md:text-3xl lg:text-4xl text-cyan-950 pl-5 lg:pl-20 visible">{title}</h1>
                 <div className="lg:pr-20 pr-5 md:pr-10 flex place-items-center space-x-5">
 
                     <Link

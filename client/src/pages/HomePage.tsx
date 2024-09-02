@@ -28,9 +28,15 @@ const HomePage = () => {
     }
 
     const deleteSelected = async () => {
-        await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
-        setSelect([])
+        try {
+            await Promise.all(select.map(sku => deleteItem(sku)))
+            await getItems() // Refresh items
+            setSelect([])
+        } catch (error) {
+            console.error('Error deleting items:', error)
+        }
     }
+
 
 
 
@@ -51,12 +57,13 @@ const HomePage = () => {
                         <div
                             key={item.sku}
                             className={select.includes(item.sku) ? "opacity-50 relative" : "relative"}
-                            onClick={() => handleClick(item.sku)}
                         >
                             <input
                                 type="checkbox"
                                 checked={select.includes(item.sku)}
                                 className="delete-checkbox absolute z-10 top-4 left-5 size-5"
+                                // onClick={() => handleClick(item.sku)}
+                                onChange={() => handleClick(item.sku)}
                             />
                             <Item item={item} />
                         </div>
