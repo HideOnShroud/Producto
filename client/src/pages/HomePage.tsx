@@ -28,26 +28,10 @@ const HomePage = () => {
     }
 
     const deleteSelected = async () => {
-        try {
-            // Delete all selected items
-            await Promise.all(select.map(async (sku) => {
-                try {
-                    deleteItem(sku);
-                } catch (error) {
-                    console.error(`Failed to delete item with SKU: ${sku}`, error);
-                }
-            }));
-
-            // Refresh the item list
-            await getItems();
-
-        } catch (error) {
-            console.error('Error during deletion process:', error);
-        } finally {
-            // Clear the selection in any case
-            setSelect([]);
-        }
+        await Promise.all(select.map(sku => deleteItem(sku))).then(() => getItems())
+        setSelect([])
     }
+
 
 
     return (
