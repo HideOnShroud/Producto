@@ -68,7 +68,7 @@ const HomePage = () => {
             </div>
             <div className="flex flex-auto pt-20 flex-row bg-neutral-50 justify-center flex-wrap gap-10 pl-20 pr-20">
                 {(
-                    items.map((item) => (
+                    products.map((item) => (
                         <div
                             key={item.sku}
                             className={select.includes(item.sku) ? "opacity-50 relative" : "relative"}
