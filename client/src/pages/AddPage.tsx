@@ -28,7 +28,7 @@ const AddPage = () => {
     const navigate = useNavigate()
 
     const validateFields = (): boolean => {
-        let isValid = true
+        let isValid = true;
         const validatorsMap: { [key: string]: ProductValidator } = {
             sku: new SKUValidator(),
             name: new NameValidator(),
@@ -37,38 +37,38 @@ const AddPage = () => {
             Book: new BookValidator(),
             DVD: new DVDValidator(),
             Furniture: new FurnitureValidator()
-        }
+        };
 
         const validatorsToCheck = [
             { key: 'sku', value: item.sku },
             { key: 'name', value: item.name },
             { key: 'price', value: item.price },
-            { key: 'productType', value: item.productType }
-        ]
+            { key: 'productType', value: item.productType },
+        ];
 
         validatorsToCheck.forEach(({ key, value }) => {
-            const validator = validatorsMap[key]
+            const validator = validatorsMap[key];
             if (validator) {
-                const result = validator.validate({ [key]: value })
+                const result = validator.validate({ [key]: value });
                 setFields((prev) => ({
                     ...prev,
                     [key]: result
-                }))
-                if (!result) isValid = false
+                }));
+                if (!result) isValid = false;
             }
-        })
+        });
 
-        const attributeValidator = validatorsMap[select]
+        const attributeValidator = validatorsMap[select];
         if (attributeValidator) {
-            const result = attributeValidator.validate(item.attributes)
+            const result = attributeValidator.validate(item.attributes);
             setFields((prev) => ({
                 ...prev,
                 [select]: result
-            }))
-            if (!result) isValid = false
+            }));
+            if (!result) isValid = false;
         }
 
-        return isValid
+        return isValid;
     }
 
 
@@ -136,7 +136,7 @@ const AddPage = () => {
                             name="weight"
                             id="weight"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight_kg'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide weight!</p>
                     </>
@@ -150,7 +150,7 @@ const AddPage = () => {
                             name="size"
                             id="size"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['size_mb'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['size'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide size</p>
                     </>
@@ -164,7 +164,7 @@ const AddPage = () => {
                             name="height"
                             id="height"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['height_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['height'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <label htmlFor="width">Width (cm):</label>
                         <input
@@ -172,7 +172,7 @@ const AddPage = () => {
                             name="width"
                             id="width"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['width_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['width'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <label htmlFor="length">Length (cm):</label>
                         <input
@@ -180,7 +180,7 @@ const AddPage = () => {
                             name="length"
                             id="length"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['length_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['length'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide dimensions!</p>
 
