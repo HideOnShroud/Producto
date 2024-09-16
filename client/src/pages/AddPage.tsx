@@ -43,7 +43,7 @@ const AddPage = () => {
             { key: 'sku', value: item.sku },
             { key: 'name', value: item.name },
             { key: 'price', value: item.price },
-            { key: 'productType', value: item.productType }
+            { key: 'productType', value: item.productType },
         ]
 
         validatorsToCheck.forEach(({ key, value }) => {
@@ -136,7 +136,7 @@ const AddPage = () => {
                             name="weight"
                             id="weight"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight_kg'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['weight'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide weight!</p>
                     </>
@@ -150,7 +150,7 @@ const AddPage = () => {
                             name="size"
                             id="size"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['size_mb'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['size'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide size</p>
                     </>
@@ -164,7 +164,7 @@ const AddPage = () => {
                             name="height"
                             id="height"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['height_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['height'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <label htmlFor="width">Width (cm):</label>
                         <input
@@ -172,7 +172,7 @@ const AddPage = () => {
                             name="width"
                             id="width"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['width_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['width'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <label htmlFor="length">Length (cm):</label>
                         <input
@@ -180,7 +180,7 @@ const AddPage = () => {
                             name="length"
                             id="length"
                             onChange={handleChange}
-                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['length_cm'] === false ? 'border-red-500' : 'border-cyan-900'}`}
+                            className={`border-2 rounded-md shadow-md w-full self-center ${fields['length'] ? 'border-cyan-900' : 'border-red-500'}`}
                         />
                         <p>Please, provide dimensions!</p>
 
